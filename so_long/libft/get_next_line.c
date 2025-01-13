@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rabusala <rabusala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raneem <raneem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:22:22 by rabusala          #+#    #+#             */
-/*   Updated: 2025/01/13 18:17:17 by rabusala         ###   ########.fr       */
+/*   Updated: 2025/01/10 11:02:55 by raneem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-int	line_length(char *str)
+size_t	line_length(char *str)
 {
-	int	i;
+	long unsigned int	i;
 
 	i = 0;
 	while (str[i] != '\0' && str[i] != '\n')
@@ -92,13 +92,13 @@ char	*get_next_line(int fd)
 		clean(&array, temp);
 	return (line);
 }
-char **inserttoarr(int fd)
+/*char **inserttoarr(int fd)
 {
 	char **map;
     char *line;
     int i=0;
     int map_size;
-
+	
     line = get_next_line(fd);
     map_size=strlen(line);
     map= (char **)malloc(sizeof(char *)* map_size);
@@ -204,10 +204,6 @@ int check_input(char **map)
 		return 0;
 	return 1;
 }
-find_xy(char **map)
-{
-	
-}
 int main ()
 {
 	int fd;
@@ -226,4 +222,4 @@ int main ()
 	//checkrec(map);
 	printf("%d\n",check_input(map));
 	return (0);
-}
+}*/
