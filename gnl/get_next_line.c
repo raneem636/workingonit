@@ -6,7 +6,7 @@
 /*   By: raneem <raneem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:22:22 by rabusala          #+#    #+#             */
-/*   Updated: 2025/01/10 04:06:02 by raneem           ###   ########.fr       */
+/*   Updated: 2025/01/10 11:02:55 by raneem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,35 @@ int checkborder(char **map)
 			return 0;
 	return 1;
 }
+int check_input(char **map)
+{
+	int i=0;
+	int j=0;
+	int p=0;
+	int e=0;
+	int c=0;
+	int width=(int)strlen(map[0]);
+	while(map[i])
+	{
+		j=0;
+		while(j<=(width-2))
+		{
+			if(map[i][j]!='1'&&map[i][j]!='0'&&map[i][j]!='E'&&map[i][j]!='P'&&map[i][j]!='C')
+				return 0;
+			if (map[i][j]=='P')
+				p++;
+			else if (map[i][j]=='E')
+				e++;
+			else if (map[i][j]=='C')
+				c++;
+			j++;
+		}
+		i++;
+	}
+	if(p!=1 || e!=1 || c<1)
+		return 0;
+	return 1;
+}
 int main ()
 {
 	int fd;
@@ -191,6 +220,6 @@ int main ()
 	else
 		printf("successfull\n");
 	//checkrec(map);
-	printf("%d\n",checkborder(map));
+	printf("%d\n",check_input(map));
 	return (0);
 }
