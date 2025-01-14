@@ -6,7 +6,7 @@
 /*   By: rabusala <rabusala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 17:22:22 by rabusala          #+#    #+#             */
-/*   Updated: 2025/01/13 18:17:17 by rabusala         ###   ########.fr       */
+/*   Updated: 2025/01/14 13:45:36 by rabusala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,21 @@ char **inserttoarr(int fd)
 	char **map;
     char *line;
     int i=0;
-    int map_size;
+    int map_size=0;
 
     line = get_next_line(fd);
+	if(!line)
+	{
+		printf("Error\n");
+		return NULL;
+	}
     map_size=strlen(line);
     map= (char **)malloc(sizeof(char *)* map_size);
     if(!map)
     {
         printf("memory allocation failed");
         close(fd);
-        return 0;
+        return (NULL);
     }
     map[i]=line;
     i+=1;
@@ -157,7 +162,7 @@ int checkborder(char **map)
 	int width=(int)strlen(map[0]);
 	while(map[i])
 		i++;
-	printf("%i\n",i);
+	//printf("%i\n",i);
 	while(j<i)
 		if (map[j++][0]!='1')
 			return 0;
@@ -204,10 +209,10 @@ int check_input(char **map)
 		return 0;
 	return 1;
 }
-find_xy(char **map)
-{
-	
-}
+// find_xy(char **map)
+// {
+
+// }
 int main ()
 {
 	int fd;
@@ -219,11 +224,14 @@ int main ()
         return 0;
     }
 	char **map=inserttoarr(fd);
-	if(!map)
+	if(map==NULL)
+	{
 		printf("error\n");
+		return 0;
+	}
 	else
 		printf("successfull\n");
 	//checkrec(map);
-	printf("%d\n",check_input(map));
+	printf("%d\n",checkborder(map));
 	return (0);
 }

@@ -69,13 +69,14 @@ int check_input(char **map)
 		return 0;
 	return 1;
 }
-char **inserttoarr(int fd)
+char **inserttoarr(int fd, t_info info)
 {
 	char **map;
     char *line;
     int i=0;
     int map_size;
 
+	printf("%d\n", info.x);
     line = get_next_line(fd);
     map_size=ft_strlen(line);
     map= (char **)malloc(sizeof(char *)* map_size);
@@ -105,15 +106,18 @@ char **inserttoarr(int fd)
 
 int main ()
 {
+	t_info info;
 	int fd;
 
+	info.x = 7;
 	fd = open("text.txt",O_RDONLY);
 	if (fd == -1)
     {
         printf("error reading the file\n");
         return 0;
     }
-	char **map=inserttoarr(fd);
+	char **map=inserttoarr(fd, info);
+
 	if(!map)
 		printf("error\n");
 	else
