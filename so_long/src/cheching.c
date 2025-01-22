@@ -1,128 +1,116 @@
 #include "so_long.h"
 
-int checkrec(char **map)
+int checkrec(t_data *info)
 {
-	int hight=0;
-	int width=(int)ft_strlen(map[0]);
-	//printf("%i\n",width);
-	while(map[hight])
+	int i=0;
+	int len=0;
+	while(info->map[i])
 	{
-		//printf("%ld\n",strlen(map[hight]));
-		if((int)ft_strlen(map[hight])!=width)
+		len=(int)ft_strlen(info->map[i])-1;
+		printf("len = %d\n",len);
+		printf("width = %d\n", info->width);
+		if(len!=info->width)
 			return 0;
-		hight++;
+		i++;
 	}
 	return 1;
 }
 
-int checkborder(char **map)
+int checkborder(t_data *info)
 {
-	int i=0;
-	int j=0;
-	int width=(int)ft_strlen(map[0]);
-	while(map[i])
+	int i;
+	i=0;
+	while(i<info->width)
+	{
+		if(info->map[0][i] != '1' || info->map[(info->hight) - 1][i] != '1')
+			return (0);
 		i++;
-	printf("%i\n",i);
-	while(j<i)
-		if (map[j++][0]!='1')
-			return 0;
-	j=0;
-	while(j<i)
-		if(map[j++][width-2]!='1')
-			return 0;
+	}
 	i=0;
-	while(i<=(width-2))
-		if(map[0][i++]!='1')
-			return 0;
-	i=0;
-	while(i<=(width-2))
-		if(map[j-1][i++]!='1')
-			return 0;
-	return 1;
+	while(i<info->hight)
+	{
+		if(info->map[i][0] != '1' || info->map[i][(info->width) - 1] != '1')
+			return (0);
+		i++;
+	}
+	return (1);
 }
-int check_input(char **map)
+int check_input(t_data *info)
 {
 	int i=0;
-	int j=0;
-	int p=0;
-	int e=0;
-	int c=0;
-	int width=(int)ft_strlen(map[0]);
-	while(map[i])
+	int j;
+	while(i<info->hight)
 	{
 		j=0;
-		while(j<=(width-2))
+		while(j<info->width)
 		{
-			if(map[i][j]!='1'&&map[i][j]!='0'&&map[i][j]!='E'&&map[i][j]!='P'&&map[i][j]!='C')
+			if(info->map[i][j]!='1'&&info->map[i][j]!='0'&&info->map[i][j]!='E'&&info->map[i][j]!='P'&&info->map[i][j]!='C')
 				return 0;
-			if (map[i][j]=='P')
-				p++;
-			else if (map[i][j]=='E')
-				e++;
-			else if (map[i][j]=='C')
-				c++;
+			if (info->map[i][j]=='P')
+				info->p++;
+			else if (info->map[i][j]=='E')
+				info->e++;
+			else if (info->map[i][j]=='C')
+				info->c++;
 			j++;
 		}
 		i++;
 	}
-	if(p!=1 || e!=1 || c<1)
+	if(info->p!=1 || info->e!=1 || info->c<1)
 		return 0;
 	return 1;
 }
-char **inserttoarr(int fd, t_info info)
+char **inserttoarr(t_data *info,char *file)
 {
-	char **map;
     char *line;
+	char **map;
     int i=0;
-    int map_size;
-
-	printf("%d\n", info.x);
-    line = get_next_line(fd);
-    map_size=ft_strlen(line);
-    map= (char **)malloc(sizeof(char *)* map_size);
-    if(!map)
-    {
-        printf("memory allocation failed");
-        close(fd);
-        return 0;
-    }
-    map[i]=line;
-    i+=1;
-    while((line = get_next_line(fd)) != NULL)
-    {
-        map[i]=line;
-        i++;
-    }
-	 int j=0;
-    while(j<i)
-    {
-            write(1,map[j],ft_strlen(map[j]));
-            j++;
-    }
-   write(1,"\n",1);
-	return (map);
-}
-
-
-int main ()
-{
-	t_info info;
+    int map_size=0;
 	int fd;
-
-	info.x = 7;
-	fd = open("text.txt",O_RDONLY);
+	fd=open(file,O_RDONLY);
 	if (fd == -1)
     {
         printf("error reading the file\n");
-        return 0;
+        return NULL;
     }
-	char **map=inserttoarr(fd, info);
+	while((line = get_next_line(fd)) != NULL)
+	{
+        map_size++;
+		free(line);
+	}
+	close(fd);
+    map= (char **)malloc(sizeof(char *)*(map_size+1));
+    if(!map)
+    {
+        printf("memory allocation failed");
+		return(NULL);
+    }
+	fd=open(file,O_RDONLY);
+    while((line = get_next_line(fd)) != NULL)
+    {
+       	map[i]=line;
+        i++;
+    }
+	map[i]=NULL;
+	int j=0;
+	while(j<i)
+	{
+		write(1,map[j],ft_strlen(map[j]));
+		j++;
+	}
+	info->hight=i;
+	info->width=(int)ft_strlen(map[0])-1;
+   return(map);
+}
 
-	if(!map)
-		printf("error\n");
-	else
-		printf("successfull\n");
-	//checkrec(map);
-	printf("%d\n",checkrec(map));
+int checkfile(char *file)
+{
+	int len;
+
+	len = ft_strlen(file);
+	if (file[len-1] == 'r' && file[len-2] == 'e' && file[len - 3] == 'b' && file[len - 4] == '.')
+		return (1);
+
 	return (0);
+
 }

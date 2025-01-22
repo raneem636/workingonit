@@ -6,7 +6,7 @@
 /*   By: rabusala <rabusala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/01 14:19:44 by nagha             #+#    #+#             */
-/*   Updated: 2025/01/13 15:01:23 by rabusala         ###   ########.fr       */
+/*   Updated: 2025/01/19 17:01:48 by rabusala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
     {
         mlx_destroy_window(data->mlx, data->window);
         mlx_destroy_display(data->mlx);
+		printf("x=%d\n",data->x);
+		printf("y=%d\n",data->y);
         exit(0);
     }
     return (0);

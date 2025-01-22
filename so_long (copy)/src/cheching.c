@@ -1,17 +1,18 @@
 #include "so_long.h"
 
-int checkrec(char **map)
+int checkrec(t_data *info)
 {
 	int hight=0;
-	int width=(int)ft_strlen(map[0]);
+	info->width=(int)ft_strlen(info->map[0]);
 	//printf("%i\n",width);
-	while(map[hight])
+	while(info->map[hight])
 	{
 		//printf("%ld\n",strlen(map[hight]));
-		if((int)ft_strlen(map[hight])!=width)
+		if((int)ft_strlen(info->map[hight])!=info->width)
 			return 0;
 		hight++;
 	}
+	info->hight=hight;
 	return 1;
 }
 
@@ -103,22 +104,25 @@ char **inserttoarr(int fd)
 }
 
 
-int main ()
-{
-	int fd;
+// int main ()
+// {
+// 	t_info info;
+// 	int fd;
 
-	fd = open("text.txt",O_RDONLY);
-	if (fd == -1)
-    {
-        printf("error reading the file\n");
-        return 0;
-    }
-	char **map=inserttoarr(fd);
-	if(!map)
-		printf("error\n");
-	else
-		printf("successfull\n");
-	//checkrec(map);
-	printf("%d\n",checkrec(map));
-	return (0);
-}
+// 	info.x = 7;
+// 	fd = open("text.txt",O_RDONLY);
+// 	if (fd == -1)
+//     {
+//         printf("error reading the file\n");
+//         return 0;
+//     }
+// 	char **map=inserttoarr(fd, info);
+
+// 	if(!map)
+// 		printf("error\n");
+// 	else
+// 		printf("successfull\n");
+// 	//checkrec(map);
+// 	printf("%d\n",checkrec(map));
+// 	return (0);
+// }

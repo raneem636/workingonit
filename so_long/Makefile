@@ -1,5 +1,5 @@
 NAME = so_long
-SRCS = src/mlx.c src/exit_handler.c src/cheching.c
+SRCS = src/mlx.c src/exit_handler.c src/cheching.c src/put_image.c src/validpath.c src/moving.c src/flood_fill.c
 OFILES =  $(SRCS:src/%.c=obj/%.o)
 lib = libft/libft.a
 lib_path=./libft

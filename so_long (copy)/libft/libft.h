@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rabusala <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rabusala <rabusala@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 11:19:23 by rabusala          #+#    #+#             */
-/*   Updated: 2024/09/04 11:42:20 by rabusala         ###   ########.fr       */
+/*   Updated: 2025/01/19 12:08:11 by rabusala         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,4 @@ size_t	line_length(char *str);
 char	*clean(char **array, char *ss);
 char	*read_1ine(int fd, char *array);
 char	*get_next_line(int fd);
-char **inserttoarr(int fd);
-int checkrec(char **map);
-int checkborder(char **map);
-int check_input(char **map);
 #endif
