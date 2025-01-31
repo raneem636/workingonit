@@ -32,7 +32,7 @@ static size_t	count(char const *s, char c)
 		while (*s == c)
 			s++;
 		if (*s)
-		{	
+		{
 			count++;
 			while (*s && *s != c)
 				s++;
@@ -96,4 +96,4 @@ char	**ft_split(char const *s, char c)
 	}
 	arr[i] = NULL;
 	return (arr);
-}	
+}

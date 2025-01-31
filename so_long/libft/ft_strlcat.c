@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   ft_strlvamp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rabusala <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dest, const char *src, size_t size)
+size_t	ft_strlvamp(char *dest, const char *src, size_t size)
 
 {
 	size_t	dlen;
@@ -44,7 +44,7 @@ size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
 char dest[]="a";
 char src[]="lorem ipsum dolor sit amet";
-printf("%ld\n",ft_strlcat(dest,src,0));
+printf("%ld\n",ft_strlvamp(dest,src,0));
 printf("%s",dest);
 return (0);
 }*/

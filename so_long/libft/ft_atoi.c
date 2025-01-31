@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rabusala <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: balhamad <balhamad@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 10:53:04 by rabusala          #+#    #+#             */
-/*   Updated: 2024/09/03 11:05:05 by rabusala         ###   ########.fr       */
+/*   Updated: 2025/01/29 15:38:34 by balhamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
-int	ft_atoi(const char *nptr)
 
+int	ft_atoi(const char *nptr)
 {
 	int	i;
 	int	sign;
@@ -38,11 +38,4 @@ int	ft_atoi(const char *nptr)
 		i++;
 	}
 	return (sign * res);
-}
-int main(void)
-{
-char y[]="47h5h";
-printf("%d\n",ft_atoi(y));
-printf("%d",atoi(y));
-return (0);
 }

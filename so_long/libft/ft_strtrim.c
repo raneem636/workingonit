@@ -44,7 +44,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 			return (NULL);
 		ptr[0] = '\0';
 		return (ptr);
-	}	
+	}
 	while ((n > j) && ft_strchr(set, s1[n]))
 		n--;
 	ptr = (char *)malloc(n - j + 2);

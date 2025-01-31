@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rabusala <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raneem <raneem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:41:46 by rabusala          #+#    #+#             */
-/*   Updated: 2024/09/03 18:34:57 by rabusala         ###   ########.fr       */
+/*   Updated: 2025/01/31 11:18:45 by raneem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	*ft_calloc(size_t nmemb, size_t size )
     int *array = (int *)ft_calloc(10, sizeof(int));
 
     if (array == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
+        fprintf(stderr, "Memory allovampion failed\n");
         return 1;
     }
 

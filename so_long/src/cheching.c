@@ -1,116 +1,121 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cheching.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: balhamad <balhamad@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/25 20:15:30 by balhamad          #+#    #+#             */
+/*   Updated: 2025/01/30 17:45:16 by balhamad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-int checkrec(t_data *info)
+int	checkrec(t_data *info)
 {
-	int i=0;
-	int len=0;
-	while(info->map[i])
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (info->map[i])
 	{
-		len=(int)ft_strlen(info->map[i])-1;
-		printf("len = %d\n",len);
-		printf("width = %d\n", info->width);
-		if(len!=info->width)
-			return 0;
+		remove_nl (info->map[i]);
+		if (i == 0)
+			info->width = (int)ft_strlen(info->map[0]);
+		len = (int)ft_strlen(info->map[i]);
+		if (len != info->width)
+			return (1);
 		i++;
 	}
-	return 1;
+	return (0);
 }
 
-int checkborder(t_data *info)
+int	checkborder(t_data *info)
 {
-	int i;
-	i=0;
-	while(i<info->width)
+	int	i;
+
+	i = 0;
+	while (i < info->width)
 	{
-		if(info->map[0][i] != '1' || info->map[(info->hight) - 1][i] != '1')
-			return (0);
+		if (info->map[0][i] != '1' || info->map[(info->height) - 1][i] != '1')
+			return (1);
 		i++;
 	}
-	i=0;
-	while(i<info->hight)
+	i = 0;
+	while (i < info->height)
 	{
-		if(info->map[i][0] != '1' || info->map[i][(info->width) - 1] != '1')
-			return (0);
+		if (info->map[i][0] != '1' || info->map[i][info->width - 1] != '1')
+			return (1);
 		i++;
 	}
-	return (1);
+	return (0);
 }
-int check_input(t_data *info)
+
+int	check_input(t_data *info)
 {
-	int i=0;
-	int j;
-	while(i<info->hight)
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < info->height)
 	{
-		j=0;
-		while(j<info->width)
+		j = 0;
+		while (j < info->width - 1)
 		{
-			if(info->map[i][j]!='1'&&info->map[i][j]!='0'&&info->map[i][j]!='E'&&info->map[i][j]!='P'&&info->map[i][j]!='C')
-				return 0;
-			if (info->map[i][j]=='P')
+			if ((ft_strchr("ECP01", info->map[i][j]) == NULL))
+				return (1);
+			if (info->map[i][j] == 'P')
 				info->p++;
-			else if (info->map[i][j]=='E')
+			else if (info->map[i][j] == 'E')
 				info->e++;
-			else if (info->map[i][j]=='C')
+			else if (info->map[i][j] == 'C')
 				info->c++;
 			j++;
 		}
 		i++;
 	}
-	if(info->p!=1 || info->e!=1 || info->c<1)
-		return 0;
-	return 1;
-}
-char **inserttoarr(t_data *info,char *file)
-{
-    char *line;
-	char **map;
-    int i=0;
-    int map_size=0;
-	int fd;
-	fd=open(file,O_RDONLY);
-	if (fd == -1)
-    {
-        printf("error reading the file\n");
-        return NULL;
-    }
-	while((line = get_next_line(fd)) != NULL)
-	{
-        map_size++;
-		free(line);
-	}
-	close(fd);
-    map= (char **)malloc(sizeof(char *)*(map_size+1));
-    if(!map)
-    {
-        printf("memory allocation failed");
-		return(NULL);
-    }
-	fd=open(file,O_RDONLY);
-    while((line = get_next_line(fd)) != NULL)
-    {
-       	map[i]=line;
-        i++;
-    }
-	map[i]=NULL;
-	int j=0;
-	while(j<i)
-	{
-		write(1,map[j],ft_strlen(map[j]));
-		j++;
-	}
-	info->hight=i;
-	info->width=(int)ft_strlen(map[0])-1;
-   return(map);
+	if (info->p != 1 || info->e != 1 || info->c < 1)
+		return (1);
+	return (0);
 }
 
-int checkfile(char *file)
+int	inserttoarr(t_data *info, char *file)
 {
-	int len;
+	char	*line;
+	int		i;
+	int		map_size;
+	int		fd;
+
+	i = 0;
+	map_size = 0;
+	map_size = counter(file);
+	info->map = (char **)ft_calloc(sizeof(char *), (map_size + 1));
+	if (!info->map)
+		return (1);
+	fd = open(file, O_RDONLY);
+	line = get_next_line(fd);
+	if (!line || map_size == 0)
+		return (1);
+	while (line != NULL)
+	{
+		info->map[i++] = line;
+		line = get_next_line(fd);
+	}
+	info->map[i] = NULL;
+	info->height = i;
+	close(fd);
+	return (0);
+}
+
+int	checkfile(char *file)
+{
+	int	len;
 
 	len = ft_strlen(file);
-	if (file[len-1] == 'r' && file[len-2] == 'e' && file[len - 3] == 'b' && file[len - 4] == '.')
+	if (file[len - 1] == 'r' && file[len - 2] == 'e'
+		&& file[len - 3] == 'b' && file[len - 4] == '.')
 		return (1);
-
 	return (0);
-
 }

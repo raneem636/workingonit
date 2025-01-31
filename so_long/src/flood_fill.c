@@ -1,29 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   flood_fill.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: balhamad <balhamad@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/25 20:18:43 by balhamad          #+#    #+#             */
+/*   Updated: 2025/01/30 18:10:29 by balhamad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
-void        flood_fill(t_data *info,int x,int y)
+
+int	insert_copy(t_data *info)
 {
-    if (x < 0 || x > info -> width || y<0 || y>info->hight)
-        return;
-    if (info->cmap[y][x]=='1')
-        return;
-    if (info->cmap[y][x]=='C')
-        info->copy_c -=1;
-    if (info->cmap[y][x]=='E')
-        info->exit_flag=1;
-    info->cmap[y][x]='1';
-    flood_fill(info, x - 1, y);
+	int	i;
+
+	i = 0;
+	info->map_copy = (char **)ft_calloc((info->height + 1), sizeof(char *));
+	if (!info->map_copy)
+		return (1);
+	while (info->map[i])
+	{
+		info->map_copy[i] = ft_strdup(info->map[i]);
+		if (!info->map_copy)
+			return (1);
+		i++;
+	}
+	info->map_copy[i] = NULL;
+	return (0);
+}
+
+void	flood_fill(t_data *info, int x, int y)
+{
+	if (x < 0 || x >= info->width || y < 0 || y >= info->height)
+		return ;
+	if (info->map_copy[y][x] == '1')
+		return ;
+	if (info->map_copy[y][x] == 'C')
+		info->copy_c -= 1;
+	if (info->map_copy[y][x] == 'E')
+		info->exit_flag = 1;
+	info->map_copy[y][x] = '1';
+	flood_fill(info, x - 1, y);
 	flood_fill(info, x + 1, y);
 	flood_fill(info, x, y - 1);
 	flood_fill(info, x, y + 1);
 }
-int        solveable(t_data *info)
+
+int	solveable(t_data *info)
 {
-    info->exit_flag=0;
-	find_xy(info);
-	find_c(info);
-	insert_copy(info);
-    flood_fill(info,info->x,info->y);
-    if(info->copy_c > 0 || info->exit_flag == 0)
-        return(0);
-    else
-        return(1);
+	info->exit_flag = 0;
+	findxy(info);
+	find_col(info);
+	if (insert_copy(info))
+		return (1);
+	flood_fill(info, info->x, info->y);
+	if (info->copy_c > 0 || info->exit_flag == 0)
+		return (1);
+	return (0);
 }

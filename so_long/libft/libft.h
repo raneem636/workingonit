@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rabusala <rabusala@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raneem <raneem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 11:19:23 by rabusala          #+#    #+#             */
-/*   Updated: 2025/01/19 12:08:11 by rabusala         ###   ########.fr       */
+/*   Updated: 2025/01/31 11:18:45 by raneem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 void	*ft_memmove(void *dest, const void *src, size_t n);
 size_t	ft_strlen(const char *s);
-size_t	ft_strlcat(char *dest, const char *src, size_t size);
+size_t	ft_strlvamp(char *dest, const char *src, size_t size);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 int		ft_printf(const char *form, ...);
 int		ft_lowhexa(unsigned int nb);
