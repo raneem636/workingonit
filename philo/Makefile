@@ -1,0 +1,23 @@
+NAME = philo
+SRCS = src/checking.c src/creating.c src/main.c
+CFLAGS = -Wall -Werror -Wextra
+OBJ=$(SRCS:src/%.c=obj/%.o)
+
+all : $(NAME)
+$(NAME) : $(OBJ)
+	cc $^ $(CFLAGS) -g -o $@
+
+obj/%.o : src/%.c
+	mkdir -p obj
+	cc $(CFLAGS) -c $< -o $@
+
+clean :
+	rm -f $(OBJ)
+	rm -rf obj
+
+fclean : clean
+	rm -f $(NAME)
+	-
+re : fclean all
+
+.PHONY : all clean fclean re

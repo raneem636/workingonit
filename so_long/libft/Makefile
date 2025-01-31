@@ -17,7 +17,7 @@ SRCS = ft_isalnum.c \
 	ft_atoi.c\
 	ft_calloc.c\
 	ft_strlcpy.c\
-	ft_strlvamp.c\
+	ft_strlcat.c\
 	ft_toupper.c\
 	ft_strdup.c\
 	ft_memchr.c\
