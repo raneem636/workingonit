@@ -1,11 +1,11 @@
 NAME = philo
-SRCS = src/checking.c src/creating.c src/main.c
+SRCS = src/checking.c src/initializing.c src/main.c src/creating.c src/routine.c src/utils.c
 CFLAGS = -Wall -Werror -Wextra
 OBJ=$(SRCS:src/%.c=obj/%.o)
 
 all : $(NAME)
 $(NAME) : $(OBJ)
-	cc $^ $(CFLAGS) -g -o $@
+	cc $^ $(CFLAGS) -o $@
 
 obj/%.o : src/%.c
 	mkdir -p obj
