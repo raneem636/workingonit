@@ -17,28 +17,75 @@ int	ft_usleep(size_t ms)
 		usleep(500);
 	return (0);
 }
-int checkdead(t_philos *philo,struct s_info *info)
+int checkdead(t_philos *philo)
 {
-    size_t n =info->time_to_die;
-    pthread_mutex_lock(philo->meal_lock);
-    if(get_time() - philo->last_meal >= n && philo->eating == 0)
+    size_t n =philo->info->time_to_die;
+    pthread_mutex_lock(&philo->info->meal_lock);
+    if(get_time() - philo->last_meal > n && philo->eating == 0)
     {
-        print(philo,info,"is dead",philo->id);
-        pthread_mutex_lock(philo->dead_lock);
-        philo->dead_flag = 1;
-        pthread_mutex_unlock(philo->dead_lock);
+        pthread_mutex_unlock(&philo->info->meal_lock);
+        return(1);
     }
-    pthread_mutex_unlock(philo->meal_lock);
+    pthread_mutex_unlock(&philo->info->meal_lock);
     return 0;
+}
+int deaddd(t_info *info)
+{
+    int i=0;
+    while(i<info->num_of_philos)
+    {
+        if(checkdead(&info->philos[i])==1)
+        {
+            print(&info->philos[i],info,"is dead",info->philos[i].id);
+            pthread_mutex_lock(&info->dead_lock);
+            info->deadforever = 1;
+            pthread_mutex_unlock(&info->dead_lock);
+            return 1;
+        }
+        i++;
+    }
+    return 0;
+
+}
+int all_fed(t_info *info)
+{
+    int i;
+    int full;
+
+    i = 0;
+    full=0;
+    while(i < info->num_of_philos)
+    {
+        if(info->philos[i].eaten_meals == info->num_of_meals)
+            full++;
+        i++;
+    }
+    if(full == info->num_of_philos)
+        return (1);
+    return(0);
+}
+int not_hungry(t_philos *philo)
+{
+    pthread_mutex_lock(&philo->info->meal_lock);
+    if(philo->eaten_meals == philo->info->num_of_meals)
+    {
+        // printf("num of meals %d\n",philo->info->num_of_meals);
+        // printf("eaten meals %d\n",philo->eaten_meals);
+        pthread_mutex_unlock(&philo->info->meal_lock);
+        return(1);
+    }
+    pthread_mutex_unlock(&philo->info->meal_lock);
+    return (0);
 }
 void print(t_philos *philo,t_info *info,char *msg,int id)
 {
-    pthread_mutex_lock(philo->write_lock);
-    if(!deadforever(info))
+    pthread_mutex_lock(&philo->info->write_lock);
+    size_t time;
+    time = get_time() - philo->birthdate;
+    if(!info->deadforever)
     {
-        printf("im in print\n");
-        printf("%ld ,%d ,%s",get_time(),id,msg);
+        printf("%ld %d %s\n",time,id,msg);
     }
-    pthread_mutex_unlock(philo->write_lock);
+    pthread_mutex_unlock(&philo->info->write_lock);
     
 }
